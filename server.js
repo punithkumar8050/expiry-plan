@@ -123,6 +123,10 @@ app.delete('/auth/delete/:userId', (req, res) => {
         });
     });
 });
+// --- ROBOT KEEPER & HOME PAGE ---
+app.get('/', (req, res) => {
+    res.send('✅ Expiry Plan Server is RUNNING!');
+});
 
 // --- START SERVER ---
 app.listen(8080, () => {
