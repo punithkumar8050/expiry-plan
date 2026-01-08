@@ -7,13 +7,21 @@ app.use(express.json());
 app.use(cors());
 
 // 1. Connect to Database
+// DELETE FROM HERE 👇
+// PASTE THIS NEW BLOCK 👇
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'PunitH@767688', // <--- ⚠️ PUT YOUR REAL PASSWORD HERE
-    database: 'expiry_plans',
-    dateStrings: true // <--- 🟢 CRITICAL FIX: Keeps dates exact (no -1 day glitch)
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT || 4000, // TiDB uses port 4000
+    dateStrings: true,               // Keeps your dates correct
+    ssl: {
+        rejectUnauthorized: true,    // The "Security Key" for the Cloud
+        minVersion: 'TLSv1.2'
+    }
 });
+// DELETE TO HERE 👆
 
 db.connect((err) => {
     if (err) console.error('❌ Database connection failed:', err);
